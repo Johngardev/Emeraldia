@@ -3,6 +3,7 @@ package com.emeraldia.backend.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Product {
   private List<String> imageUrls;
 
   // --- Atributos específicos para diferentes tipos de productos ---
+  @Field("product_type")
   private String productType; // e.g., "SINGLE_EMERALD", "GEMSTONE_LOT", "OTHER_GEMSTONE"
 
   // Atributos comunes a la mayoría de las gemas (pueden ser nulos para lotes o si no aplica)
@@ -30,16 +32,25 @@ public class Product {
   private String clarity;
   private String treatment;
   private String certification;
+  private String dimensions;
 
   // Atributos específicos para LOTES
+  @Field("number_of_pieces")
   private Integer numberOfPieces;
+  @Field("total_carat_weight")
   private BigDecimal totalCaratWeight;
+  @Field("lot_description")
   private String lotDescription;
+  @Field("gemstones_in_lot")
   private List<GemstoneInLot> gemstonesInLot;
 
+  @Field("gem_type")
   private String gemType;
 
+  private String categoryId;
+
   // Un mapa para atributos aún más dinámicos y específicos
+  @Field("additional_properties")
   private Map<String, String> additionalProperties;
 
   // Métodos para la lista de gemas individuales en un lote
@@ -163,6 +174,14 @@ public class Product {
     this.certification = certification;
   }
 
+  public String getDimensions() {
+    return dimensions;
+  }
+
+  public void setDimensions(String dimensions) {
+    this.dimensions = dimensions;
+  }
+
   public Integer getNumberOfPieces() {
     return numberOfPieces;
   }
@@ -201,6 +220,14 @@ public class Product {
 
   public void setGemType(String gemType) {
     this.gemType = gemType;
+  }
+
+  public String getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(String categoryId) {
+    this.categoryId = categoryId;
   }
 
   public Map<String, String> getAdditionalProperties() {
