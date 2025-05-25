@@ -53,13 +53,29 @@ public class Product {
   @Field("additional_properties")
   private Map<String, String> additionalProperties;
 
+  public Product() {}
+
   // Métodos para la lista de gemas individuales en un lote
   @Data
   public static class GemstoneInLot {
     private String gemType;
-    private BigDecimal weight;
+    private BigDecimal caratWeight;
     private String color;
     private String cut;
+
+    public GemstoneInLot() {}
+
+    public String getGemType() { return gemType; }
+    public void setGemType(String gemType) { this.gemType = gemType; }
+
+    public BigDecimal getCaratWeight() { return caratWeight; }
+    public void setCaratWeight(BigDecimal caratWeight) { this.caratWeight = caratWeight; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+
+    public String getCut() { return cut; }
+    public void setCut(String cut) { this.cut = cut; }
   }
 
   public String getId() {
