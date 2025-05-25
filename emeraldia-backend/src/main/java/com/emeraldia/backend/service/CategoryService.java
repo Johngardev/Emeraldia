@@ -77,7 +77,6 @@ public class CategoryService {
               existingCategory.setParentCategory(updatedCategory.getParentCategory());
               existingCategory.setOrder(updatedCategory.getOrder());
               existingCategory.setImageUrl(updatedCategory.getImageUrl());
-              existingCategory.setIsActive(updatedCategory.getIsActive());
               existingCategory.setType(updatedCategory.getType()); // Actualiza el tipo de categoría
               // Vuelve a generar slug si el nombre cambia y no viene en updatedCategory
               if (!existingCategory.getName().equals(updatedCategory.getName()) && (updatedCategory.getSlug() == null || updatedCategory.getSlug().isEmpty())) {
