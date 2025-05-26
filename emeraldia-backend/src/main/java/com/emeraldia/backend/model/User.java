@@ -36,13 +36,9 @@ public class User implements UserDetails {
   @Size(min = 8, message = "Password must be at least 8 characters long")
   private String password;
 
-  @NotBlank(message = "First name cannot be empty")
-  @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
-  private String firstName;
-
-  @NotBlank(message = "Last name cannot be empty")
-  @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
-  private String lastName;
+  @NotBlank(message = "User name cannot be empty")
+  @Size(min = 2, max = 50, message = "User name must be between 2 and 50 characters")
+  private String username;
 
   @DBRef
   private Set<Role> roles = new HashSet<>();
@@ -131,20 +127,8 @@ public class User implements UserDetails {
     this.password = password;
   }
 
-  public @NotBlank(message = "First name cannot be empty") @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters") String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(@NotBlank(message = "First name cannot be empty") @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters") String firstName) {
-    this.firstName = firstName;
-  }
-
-  public @NotBlank(message = "Last name cannot be empty") @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters") String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(@NotBlank(message = "Last name cannot be empty") @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters") String lastName) {
-    this.lastName = lastName;
+  public void setUsername(@NotBlank(message = "User name cannot be empty") @Size(min = 2, max = 50, message = "User name must be between 2 and 50 characters") String username) {
+    this.username = username;
   }
 
   public Set<Role> getRoles() {
@@ -155,11 +139,11 @@ public class User implements UserDetails {
     this.roles = roles;
   }
 
-  public Boolean getActive() {
+  public Boolean getIsActive() {
     return isActive;
   }
 
-  public void setActive(Boolean active) {
+  public void setIsActive(Boolean active) {
     isActive = active;
   }
 

@@ -2,5 +2,6 @@ package com.emeraldia.backend.model;
 
 public enum EmployeeRole {
   ROLE_CUSTOMER,
-  ROLE_ADMIN
+  ROLE_ADMIN,
+  ROLE_USER
 }

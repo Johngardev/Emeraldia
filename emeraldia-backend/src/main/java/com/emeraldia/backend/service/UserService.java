@@ -85,8 +85,7 @@ public class UserService {
             .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
     // Actualizar campos permitidos
-    existingUser.setFirstName(userDetails.getFirstName());
-    existingUser.setLastName(userDetails.getLastName());
+    existingUser.setUsername(userDetails.getUsername());
     existingUser.setPhoneNumber(userDetails.getPhoneNumber());
     existingUser.setAddress(userDetails.getAddress());
     existingUser.setIsActive(userDetails.getIsActive());
