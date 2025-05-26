@@ -2,6 +2,7 @@ package com.emeraldia.backend.controller;
 
 import com.emeraldia.backend.model.Category;
 import com.emeraldia.backend.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class CategoryController {
    * @return ResponseEntity con la categoría creada y estado CREATED, o BAD_REQUEST si el nombre ya existe.
    */
   @PostMapping
-  public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+  public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
     try {
       Category createdCategory = categoryService.createCategory(category);
       return new ResponseEntity<>(createdCategory, HttpStatus.CREATED); // 201 Created
@@ -73,7 +74,7 @@ public class CategoryController {
    * @return ResponseEntity con la categoría actualizada y estado OK, o NOT_FOUND si no existe, o BAD_REQUEST.
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Category> updateCategory(@PathVariable String id, @RequestBody Category category) {
+  public ResponseEntity<Category> updateCategory(@PathVariable String id, @Valid @RequestBody Category category) {
     try {
       Category updatedCategory = categoryService.updateCategory(id, category);
       return new ResponseEntity<>(updatedCategory, HttpStatus.OK); // 200 OK

@@ -4,21 +4,29 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 @Data
 @Document(collection = "categories")
 public class Category {
   @Id
   private String id;
+  @NotBlank(message = "Category name cannot be empty")
+  @Size(min = 3, max = 50, message = "Category name must be between 3 and 50 characters")
   private String name;
   private String slug; // Para URLs amigables (ej. /productos?categoria=esmeraldas-colombianas)
+  @Size(max = 200, message = "Category description cannot exceed 200 characters")
   private String description;
   private String parentCategory; // ID de la categoría padre para subcategorías
   private Integer order; // Para definir el orden de visualización
   private String imageUrl; // Icono o imagen para la categoría
+  @NotNull(message = "Active status cannot be null")
   private Boolean isActive;
   @Field("category_type")
   private String type; // Define el tipo de categoría: "ORIGIN", "CUT", "COLOR", "GEM_TYPE", "COLLECTION", etc.
+
+  public Category() {}
 
   public String getId() {
     return id;

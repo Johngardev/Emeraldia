@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,10 +16,18 @@ import java.util.Map;
 public class Product {
   @Id
   private String id;
+  @NotBlank(message = "Product name cannot be empty")
+  @Size(min = 3, max = 100, message = "Product name must be between 3 and 100 characters")
   private String name;
+  @Size(max = 500, message = "Description cannot exceed 500 characters")
   private String description;
+  @NotNull(message = "Price cannot be null")
+  @DecimalMin(value = "0.01", message = "Price must be greater than 0")
   private Long price;
+  @NotNull(message = "Stock quantity cannot be null")
+  @Min(value = 0, message = "Stock quantity cannot be negative")
   private Integer stockQuantity;
+  @NotEmpty(message = "At least one image URL is required")
   private List<String> imageUrls;
 
   // --- Atributos específicos para diferentes tipos de productos ---
@@ -26,6 +36,7 @@ public class Product {
 
   // Atributos comunes a la mayoría de las gemas (pueden ser nulos para lotes o si no aplica)
   private String origin;
+  @DecimalMin(value = "0.0", inclusive = false, message = "Carat weight must be greater than 0")
   private BigDecimal caratWeight; // Para una sola gema, peso total para un lote
   private String color;
   private String cut;
@@ -35,18 +46,24 @@ public class Product {
   private String dimensions;
 
   // Atributos específicos para LOTES
+  @Min(value = 1, message = "Number of pieces must be at least 1 for a lot")
   @Field("number_of_pieces")
   private Integer numberOfPieces;
+  @DecimalMin(value = "0.0", inclusive = false, message = "Total carat weight must be greater than 0 for a lot")
   @Field("total_carat_weight")
   private BigDecimal totalCaratWeight;
+  @Size(max = 500, message = "Lot description cannot exceed 500 characters")
   @Field("lot_description")
   private String lotDescription;
+  @Valid
   @Field("gemstones_in_lot")
   private List<GemstoneInLot> gemstonesInLot;
 
+  @NotBlank(message = "Gem type cannot be empty")
   @Field("gem_type")
   private String gemType;
 
+  @NotBlank(message = "Category ID cannot be empty")
   private String categoryId;
 
   // Un mapa para atributos aún más dinámicos y específicos
@@ -58,7 +75,10 @@ public class Product {
   // Métodos para la lista de gemas individuales en un lote
   @Data
   public static class GemstoneInLot {
+    @NotBlank(message = "Gem type in lot cannot be empty")
     private String gemType;
+    @NotNull(message = "Carat weight in lot cannot be null")
+    @DecimalMin(value = "0.01", message = "Carat weight in lot must be greater than 0")
     private BigDecimal caratWeight;
     private String color;
     private String cut;
