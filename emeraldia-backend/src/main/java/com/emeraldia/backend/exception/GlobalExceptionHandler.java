@@ -61,15 +61,6 @@ public class GlobalExceptionHandler {
     String errorMessage = "An unexpected error occurred.";
     String errorName = "Internal Server Error";
 
-    // Si tienes una excepción personalizada para "No encontrado"
-    // if (ex instanceof ResourceNotFoundException) {
-    //     status = HttpStatus.NOT_FOUND;
-    //     errorMessage = ex.getMessage();
-    //     errorName = "Not Found";
-    // } else {
-    //     errorMessage = ex.getMessage(); // O un mensaje genérico si no quieres exponer detalles internos
-    // }
-
     // Asumo que tu servicio lanza RuntimeException para "not found" o "bad request"
     // Si tienes "ResourceNotFoundException" o similar, la manejamos:
     if (ex.getMessage() != null && ex.getMessage().toLowerCase().contains("not found")) {
@@ -88,6 +79,18 @@ public class GlobalExceptionHandler {
             request.getDescription(false).replace("uri=", "")
     );
     return new ResponseEntity<>(errorResponse, status);
+  }
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+          ResourceNotFoundException ex, WebRequest request) {
+    ErrorResponse errorResponse = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            "Not Found",
+            ex.getMessage(),
+            request.getDescription(false).replace("uri=", "")
+    );
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
   }
 
 
