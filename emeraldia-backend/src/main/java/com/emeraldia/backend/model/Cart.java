@@ -1,5 +1,6 @@
 package com.emeraldia.backend.model;
 
+import com.emeraldia.backend.dto.CartItemEmbedded;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,46 @@ public class Cart {
     this.user = user;
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public List<CartItemEmbedded> getCartItems() {
+    return cartItems;
+  }
+
+  public void setCartItems(List<CartItemEmbedded> cartItems) {
+    this.cartItems = cartItems;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   // Métodos utilitarios para manejar ítems (opcional, el servicio también los manejará)

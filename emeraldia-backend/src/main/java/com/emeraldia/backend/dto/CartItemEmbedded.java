@@ -1,4 +1,4 @@
-package com.emeraldia.backend.model;
+package com.emeraldia.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +18,26 @@ public class CartItemEmbedded {
       return productPrice.multiply(BigDecimal.valueOf(quantity));
     }
     return BigDecimal.ZERO;
+  }
+
+  public CartItemEmbedded(String productId, Integer quantity) {
+    this.productId = productId;
+    this.quantity = quantity;
+  }
+
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
+  }
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
   }
 }

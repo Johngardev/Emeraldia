@@ -1,7 +1,7 @@
 package com.emeraldia.backend.service;
 
 import com.emeraldia.backend.model.Cart;
-import com.emeraldia.backend.model.CartItemEmbedded;
+import com.emeraldia.backend.dto.CartItemEmbedded;
 import com.emeraldia.backend.model.Product;
 import com.emeraldia.backend.model.User;
 import com.emeraldia.backend.payload.request.CartItemRequest;
@@ -180,14 +180,7 @@ public class CartService {
                 return null; // O un CartItemResponse con info limitada
               }
 
-              return new CartItemResponse(
-                      item.getProductId(), // ID del producto como el ID del ítem
-                      product.getId(),
-                      product.getName(),
-                      product.getPrice(),
-                      item.getQuantity(),
-                      item.getSubtotal(product.getPrice())
-              );
+              return new CartItemResponse(item, product);
             })
             .filter(java.util.Objects::nonNull) // Filtrar ítems nulos si el producto no se encontró
             .collect(Collectors.toList());
