@@ -95,6 +95,7 @@ public class WebSecurityConfig {
             // Set session policy to stateless
             .authorizeHttpRequests(auth -> auth
                     // Configure authorization for HTTP requests
+                    .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/api/products/**").permitAll()
                     .requestMatchers("/api/users/**").permitAll()
                     // Allow public access to test endpoints

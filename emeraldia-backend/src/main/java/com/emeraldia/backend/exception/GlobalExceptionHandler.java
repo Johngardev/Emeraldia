@@ -19,17 +19,17 @@ public class GlobalExceptionHandler {
           MethodArgumentNotValidException ex, WebRequest request) {
     Map<String, String> errors = new HashMap<>();
     ex.getBindingResult().getAllErrors().forEach(error -> {
-      String fieldName = ((FieldError) error).getField();
+      String fieldName = ((FieldError) error).getField(); // Asegúrate de que esto sea FieldError
       String errorMessage = error.getDefaultMessage();
       errors.put(fieldName, errorMessage);
     });
 
     ErrorResponse errorResponse = new ErrorResponse(
             HttpStatus.BAD_REQUEST.value(),
-            "Bad Request",
-            "Validation failed for request body.",
+            "Validation Error",
+            "Validation failed for some fields.",
             request.getDescription(false).replace("uri=", ""),
-            errors
+            errors // Pasa el mapa de errores al constructor
     );
     return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
   }
@@ -47,11 +47,8 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
   }
 
-  // Manejo de excepciones de "No encontrado" (Personaliza esto si tienes tus propias excepciones NotFound)
-  // Puedes crear una clase como public class ResourceNotFoundException extends RuntimeException {}
-  // y usarla en tus servicios.
-  @ExceptionHandler(RuntimeException.class) // Usar RuntimeException como fallback general,
-  // pero es mejor tener excepciones más específicas
+  // Manejo de excepciones de "No encontrado"
+  @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponse> handleRuntimeException(
           RuntimeException ex, WebRequest request) {
     // Podrías tener una lógica aquí para identificar si es un 404 (Not Found)
@@ -70,7 +67,6 @@ public class GlobalExceptionHandler {
     } else {
       errorMessage = ex.getMessage(); // O un mensaje más genérico para producción
     }
-
 
     ErrorResponse errorResponse = new ErrorResponse(
             status.value(),

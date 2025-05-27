@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -88,7 +88,7 @@ public class AuthController {
    * @return A ResponseEntity indicating success or error message.
    */
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid SignupRequest signUpRequest) {
+  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     // Check if the username is already taken
     if (userRepository.existsById(signUpRequest.getUsername())) {
       return ResponseEntity
