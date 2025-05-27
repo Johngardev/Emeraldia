@@ -23,7 +23,7 @@ public class Product {
   private String description;
   @NotNull(message = "Price cannot be null")
   @DecimalMin(value = "0.01", message = "Price must be greater than 0")
-  private Long price;
+  private BigDecimal price;
   @NotNull(message = "Stock quantity cannot be null")
   @Min(value = 0, message = "Stock quantity cannot be negative")
   private Integer stockQuantity;
@@ -122,11 +122,11 @@ public class Product {
     this.description = description;
   }
 
-  public Long getPrice() {
+  public @NotNull(message = "Price cannot be null") @DecimalMin(value = "0.01", message = "Price must be greater than 0") BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(Long price) {
+  public void setPrice(@NotNull(message = "Price cannot be null") @DecimalMin(value = "0.01", message = "Price must be greater than 0") BigDecimal price) {
     this.price = price;
   }
 
