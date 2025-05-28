@@ -98,6 +98,8 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/api/products/**").permitAll()
                     .requestMatchers("/api/users/**").permitAll()
+                    .requestMatchers("/api/categories/**").permitAll()
+                    .requestMatchers("/api/cart/**").permitAll()
                     // Allow public access to test endpoints
                     .anyRequest().authenticated());
     // Require authentication for any other request

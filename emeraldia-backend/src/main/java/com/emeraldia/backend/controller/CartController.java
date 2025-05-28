@@ -19,21 +19,21 @@ public class CartController {
   private CartService cartService;
 
   @GetMapping
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<CartResponse> getCart() {
     CartResponse cart = cartService.getOrCreateCartForCurrentUser();
     return ResponseEntity.ok(cart);
   }
 
   @PostMapping("/add")
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<CartResponse> addProductToCart(@Valid @RequestBody CartItemRequest request) {
     CartResponse updatedCart = cartService.addProductToCart(request);
     return ResponseEntity.ok(updatedCart);
   }
 
   @PutMapping("/update/{productId}") // productId ahora es String
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<CartResponse> updateProductQuantity(
           @PathVariable String productId, // Cambiado a String
           @RequestParam @Min(value = 0, message = "Quantity must be at least 0") Integer quantity) {
@@ -42,14 +42,14 @@ public class CartController {
   }
 
   @DeleteMapping("/remove/{productId}") // productId ahora es String
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<CartResponse> removeProductFromCart(@PathVariable String productId) { // Cambiado a String
     CartResponse updatedCart = cartService.removeProductFromCart(productId);
     return ResponseEntity.ok(updatedCart);
   }
 
   @DeleteMapping("/clear")
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<CartResponse> clearCart() {
     CartResponse clearedCart = cartService.clearCart();
     return ResponseEntity.ok(clearedCart);

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class CategoryController {
    * @return ResponseEntity con una lista de categorías y estado OK.
    */
   @GetMapping
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<List<Category>> getAllCategories() {
     List<Category> categories = categoryService.getAllCategories();
     if (categories.isEmpty()) {
@@ -43,6 +45,7 @@ public class CategoryController {
    * @return ResponseEntity con la categoría encontrada y estado OK, o NOT_FOUND.
    */
   @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<Category> getCategoryById(@PathVariable String id) {
     return categoryService.getCategoryById(id)
             .map(category -> new ResponseEntity<>(category, HttpStatus.OK)) // 200 OK
@@ -56,6 +59,7 @@ public class CategoryController {
    * @return ResponseEntity con la categoría creada y estado CREATED, o BAD_REQUEST si el nombre ya existe.
    */
   @PostMapping
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
     try {
       Category createdCategory = categoryService.createCategory(category);
@@ -74,6 +78,7 @@ public class CategoryController {
    * @return ResponseEntity con la categoría actualizada y estado OK, o NOT_FOUND si no existe, o BAD_REQUEST.
    */
   @PutMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Category> updateCategory(@PathVariable String id, @Valid @RequestBody Category category) {
     try {
       Category updatedCategory = categoryService.updateCategory(id, category);
@@ -91,6 +96,7 @@ public class CategoryController {
    * @return ResponseEntity con estado NO_CONTENT.
    */
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
     categoryService.deleteCategory(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
@@ -103,6 +109,7 @@ public class CategoryController {
    * @return ResponseEntity con una lista de categorías y estado OK.
    */
   @GetMapping("/status/{isActive}")
+  @PreAuthorize("hasRole('ROLE_ADMIN'))")
   public ResponseEntity<List<Category>> getCategoriesByStatus(@PathVariable Boolean isActive) {
     List<Category> categories = categoryService.getCategoriesByStatus(isActive);
     if (categories.isEmpty()) {
@@ -118,6 +125,7 @@ public class CategoryController {
    * @return ResponseEntity con una lista de categorías y estado OK.
    */
   @GetMapping("/type/{type}")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<List<Category>> getCategoriesByType(@PathVariable String type) {
     List<Category> categories = categoryService.getCategoriesByType(type.toUpperCase()); // Asumiendo que el tipo se guarda en mayúsculas
     if (categories.isEmpty()) {
@@ -133,6 +141,7 @@ public class CategoryController {
    * @return ResponseEntity con una lista de subcategorías y estado OK.
    */
   @GetMapping("/parent/{parentCategoryId}")
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
   public ResponseEntity<List<Category>> getSubcategories(@PathVariable String parentCategoryId) {
     List<Category> subcategories = categoryService.getSubcategories(parentCategoryId);
     if (subcategories.isEmpty()) {

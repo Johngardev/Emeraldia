@@ -55,12 +55,12 @@ public class User implements UserDetails {
   }
 
   /**
-   * Retorna el nombre de usuario (en nuestro caso, el email).
-   * @return El email del usuario.
+   * Retorna el nombre de usuario (en nuestro caso, el username).
+   * @return El username del usuario.
    */
   @Override
   public String getUsername() {
-    return this.email;
+    return this.username;
   }
 
   /**
