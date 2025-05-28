@@ -1,6 +1,7 @@
 package com.emeraldia.backend.payload.response;
 
 import com.emeraldia.backend.dto.OrderItem;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,17 +16,11 @@ public class OrderItemResponse {
   private BigDecimal priceAtPurchase; // Precio unitario en el momento de la compra
   private BigDecimal subtotal; // Cantidad * precioAtPurchase
 
-  // Constructor para mapear de OrderItem a OrderItemResponse
-  public OrderItemResponse(OrderItem orderItem) {
-    this.productId = orderItem.getProductId();
-    this.productName = orderItem.getProductName();
-    this.quantity = orderItem.getQuantity();
-    this.priceAtPurchase = orderItem.getPriceAtPurchase();
-    // Calcular el subtotal
-    if (orderItem.getPriceAtPurchase() != null && orderItem.getQuantity() != null) {
-      this.subtotal = orderItem.getPriceAtPurchase().multiply(new BigDecimal(orderItem.getQuantity()));
-    } else {
-      this.subtotal = BigDecimal.ZERO; // Manejar el caso de datos nulos
-    }
+  public OrderItemResponse(String productId, String productName, Integer quantity, BigDecimal priceAtPurchase, BigDecimal subtotal) {
+    this.productId = productId;
+    this.productName = productName;
+    this.quantity = quantity;
+    this.priceAtPurchase = priceAtPurchase;
+    this.subtotal = subtotal;
   }
 }
